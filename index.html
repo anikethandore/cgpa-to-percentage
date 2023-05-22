@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CGPA to Percentatge | AP Tools</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      function calculate() {
+        var inp, prog;
+        inp = Number(document.getElementById("percentinp").value);
+        prog = document.getElementById("progressCont");
+        if (inp == NaN || inp == "") {
+          prog.style.visibility = "hidden";
+        } else if (inp > 10) {
+          prog.style.visibility = "hidden";
+          alert("CGPA cannot be greater than 10");
+        } else {
+          //inp = 7.1 * inp + 11;
+          inp = (inp - 0.75) * 10;
+          prog.style.visibility = "visible";
+          move(inp);
+        }
+      }
+
+      function move(percent) {
+        var text = document.getElementById("percenttext");
+        var i = 0;
+        if (i == 0) {
+          i = 1;
+          var elem = document.getElementById("percentprogress");
+          var width = 1;
+          var id = setInterval(frame, 10);
+          function frame() {
+            if (width >= percent) {
+              clearInterval(id);
+              text.innerHTML =
+                Math.round((percent + Number.EPSILON) * 100) / 100 + " %";
+              i = 0;
+            } else {
+              width++;
+              elem.style.width = width + "%";
+              text.innerHTML = width + " %";
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      * {
+        font-family: "Quicksand", sans-serif;
+        font-weight: 700;
+      }
+
+      body {
+        background: url("enjoy.jpg");
+        background-repeat: no-repeat;
+        background-size: 180% auto;
+        background-position: center top;
+      }
+
+      .container {
+        width: 100%;
+      }
+
+      #progressCont {
+        visibility: hidden;
+        width: 100%;
+        margin-top: 2%;
+        text-align: center;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      #percentinp {
+        padding: 25px;
+        font-size: 35px;
+        border-radius: 50px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+
+      .inpholder {
+        width: 50%;
+        margin-top: 10%;
+      }
+
+      #myProgress {
+        width: 50%;
+        background-color: #ddd;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+
+      #percentprogress {
+        width: 1%;
+        height: 40px;
+        border-radius: 20px;
+        background-color: #31c936;
+      }
+
+      #percenttext {
+        filter: drop-shadow(1px 1px 1px #222);
+        font-size: 70px;
+      }
+
+      @media screen and (max-device-width: 800px) {
+        body {
+          background-size: 450% auto;
+          background-position: top;
+        }
+
+        .inpholder {
+          width: 80%;
+          margin-top: 40%;
+        }
+
+        #percentinp {
+          padding: 30px;
+          font-size: 40px;
+          border-radius: 40px;
+        }
+
+        #percentprogress {
+          width: 1%;
+          height: 50px;
+          border-radius: 20px;
+          background-color: #4caf50;
+        }
+
+        #myProgress {
+          width: 70%;
+        }
+
+        #percenttext {
+          filter: drop-shadow(1px 1px 1px #222);
+          font-size: 80px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="input-group mb-3 mx-auto inpholder">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Enter CGPA to know percentage"
+        id="percentinp"
+        onkeyup="calculate()"
+      />
+    </div>
+
+    <br />
+
+    <div class="container" id="progressCont">
+      <div class="row">
+        <p id="percenttext" class="mx-auto">0%</p>
+      </div>
+      <div class="row">
+        <div id="myProgress" class="mx-auto">
+          <div id="percentprogress"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
